@@ -1,0 +1,49 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Resources{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <h1>{{section.classroom.subject|upper}} : Assignments</h1>
+  <br>
+  <div>
+    {% for assignment in section.assignments.all|dictsortreversed:"created_timestamp" %}
+    <div class="shadow card"><a class="btn btn-link text-left card-header font-weight-bold" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-4-{{assignment.pk|slugify}}" href="#collapse-4-{{assignment.pk|slugify}}" role="button">{{assignment.title}}</a>
+      <div class="collapse" id="collapse-4-{{assignment.pk|slugify}}">
+        <div class="card-body">
+          <div class="alert alert-danger" role="alert"><span><strong>Deadline :&nbsp; {{assignment.deadline|date:"M d, Y"}}</strong></span></div>
+          <p class="m-0">{{assignment.text|linebreaksbr}}</p>
+          <hr>
+          <div class="row">
+            <div class="col text-center">
+              {% if assignment.file %}
+              <a class="btn btn-success btn-icon-split" role="button" href="{{assignment.file.url}}" download>
+                <span class="text-white-50 icon">
+                  <i class="fas fa-arrow-circle-down"></i>
+                </span>
+                <span class="text-white text">Download Assignment</span>
+              </a>
+              {% endif %}
+            </div>
+
+            <div class="col text-center">
+              <a class="btn btn-info btn-icon-split" role="button" href="{% url 'students:my_assignment' pk=assignment.pk %}">
+                <span class="text-white-50 icon">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+                <span class="text-white text">Manage Submission</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <br>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% endblock content %}

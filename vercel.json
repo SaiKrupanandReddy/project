@@ -1,0 +1,24 @@
+{
+    "builds": [{
+        "src": "Learn/wsgi.py",
+        "use": "@ardnt/vercel-python-wsgi",
+        "config": { "maxLambdaSize": "15mb" }
+    },
+{
+    "src":"build_files.sh",
+    "use":"@vercel/static-build",
+    "config":{
+        "distDir":"staticfiles_build"
+    }
+}],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+          },
+          {
+            "src": "/(.*)",
+            "dest": "Learn/wsgi.py"
+          }
+    ]
+}

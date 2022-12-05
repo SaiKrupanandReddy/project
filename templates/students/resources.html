@@ -1,0 +1,28 @@
+{% extends 'students/base.html' %}
+{% block title %}Resources{% endblock title %}
+{% block content %}
+
+<div class="container-fluid">
+  <h1>{{section.classroom.subject|upper}} : Resources</h1>
+  <br>
+  {% for resource in section.resources.all|dictsortreversed:"created_timestamp" %}
+  <div>
+    <div class="shadow card"><a class="btn btn-link text-left card-header font-weight-bold" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-4-{{resource.pk|slugify}}" href="#collapse-4-{{resource.pk|slugify}}" role="button">{{resource.title}}</a>
+      <div class="collapse" id="collapse-4-{{resource.pk|slugify}}">
+        <div class="card-body">
+          <h1 style="font-size: 14px;font-weight: bold;">{{resource.created_timestamp|date:"M d, Y"}}</h1>
+          <p class="m-0">{{resource.text|linebreaksbr}}</p>
+          <br>
+          {% if resource.file %}
+          <a class="btn btn-success btn-icon-split" role="button" href="{{resource.file.url}}" download><span class="text-white-50 icon"><i class="fas fa-arrow-circle-down"></i></span><span class="text-white text">Download Resource</span></a>                    {% endif %}
+          <br>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock content %}

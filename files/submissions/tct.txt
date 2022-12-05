@@ -1,0 +1,10 @@
+SELECT r.name as restaurant, f.name as item from food_item f
+LEFT JOIN restaurant r
+on r.id = f.restaurant_id
+
+WHERE f.id NOT IN (
+   SELECT food_item_id
+   FROM order_item o
+)
+
+

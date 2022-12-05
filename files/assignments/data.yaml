@@ -1,0 +1,7 @@
+names:
+- health
+- sick
+- tb
+nc: 3
+train: /content/drive/MyDrive/TB/TBX11K/yolov5/base_dir/images/train
+val: /content/drive/MyDrive/TB/TBX11K/yolov5/base_dir/images/validation

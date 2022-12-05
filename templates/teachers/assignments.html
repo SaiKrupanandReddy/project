@@ -1,0 +1,41 @@
+{% extends 'teachers/base.html' %} {% load static %} {% block title %}Assignments{% endblock title %} {% block content %}
+
+<div class="container-fluid">
+  <h1>Assignments</h1>
+  <br>
+  <div><a class="btn btn-warning btn-icon-split" role="button" href="{% url 'teachers:add_assignment' pk=section.pk %}"><span class="text-white-50 icon"><i class="fas fa-plus"></i></span><span class="text-white text">Add Assignment</span></a>
+
+  </div>
+  <br>
+  {% for assignment in section.assignments.all|dictsortreversed:"created_timestamp" %}
+  <div>
+    <div class="shadow card"><a class="btn btn-link text-left card-header font-weight-bold" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-4-{{assignment.pk|slugify}}" href="#collapse-4-{{assignment.pk|slugify}}" role="button">{{assignment.title}}</a>
+      <div class="collapse" id="collapse-4-{{assignment.pk|slugify}}">
+        <div class="card-body">
+          <div class="alert alert-danger" role="alert"><span><strong>Deadline :&nbsp; {{assignment.deadline|date:"M d, Y"}}</strong></span></div>
+          <p class="m-0">{{assignment.text|linebreaksbr}}</p>
+          <br>
+          <div class="row">
+            {% if assignment.file %}
+            <div class="col text-center">
+              <a class="btn btn-success btn-icon-split" role="button" href="{{assignment.file.url}}" download><span class="text-white-50 icon"><i class="fas fa-arrow-circle-down"></i></span><span class="text-white text">Download Assignment</span></a>
+
+            </div>
+            {% endif %}
+            <div class="col text-center"><a class="btn btn-info btn-icon-split" role="button" href="{% url 'teachers:assignment_submissions' pk=assignment.pk %}"><span class="text-white-50 icon"><i class="fas fa-info-circle"></i></span><span class="text-white text">Submissions</span></a>
+
+            </div>
+            <div class="col text-center"><a class="btn btn-danger btn-icon-split" role="button" href="{% url 'teachers:delete_assignment' pk=assignment.pk %}"><span class="text-white-50 icon"><i class="fas fa-trash"></i></span><span class="text-white text">Delete</span></a>
+
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}
